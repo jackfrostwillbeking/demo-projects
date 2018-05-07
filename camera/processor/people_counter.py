@@ -104,27 +104,27 @@ class PeopleCounter(object):
                     cw, ch = w, h
 
             if motion_found:
-　　　　　　　　　　　　　　　　        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-　　　　　　　　　　           cv2.circle(frame, (cx, cy), 5, (0, 0, 255), 2)
-　　　　　　　　　　　　　　　　　　　　　　　　　　　   move_timer = time.time() - self.move_time
-　　　　　　　　　　　　　　　　　　　　　　　     if (move_timer >= movelist_timeout):
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　      self.movelist = []
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　self.move_time = time.time()
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.circle(frame, (cx, cy), 5, (0, 0, 255), 2)
+                move_timer = time.time() - self.move_tim
+                if (move_timer >= movelist_timeout):
+                    self.movelist = []
+                self.move_time = time.time()
 
-　　　　　　　　　　　　　　　　　　　　　　　　　　　   old_enter = self.enter
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　old_leave = self.leave
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　self.movelist.append(cy)
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　self.enter, self.leave, self.movelist = self.crossed_y_centerline(self.enter, self.leave, self.movelist)
+                old_enter = self.enter
+                old_leave = self.leave
+                self.movelist.append(cy)
+                self.enter, self.leave, self.movelist = self.crossed_y_centerline(self.enter, self.leave, self.movelist)
 
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　if not self.movelist:
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    if self.enter > old_enter:
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　        prefix = 'enter'
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    elif self.leave > old_leave:
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　         prefix = 'leave'
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 else:
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　prefix = 'error'
+                if not self.movelist:
+                    if self.enter > old_enter:
+                        prefix = 'enter'
+                    elif self.leave > old_leave:
+                        prefix = 'leave'
+                    else:
+                        prefix = 'error'
 
-　　　　　　　　　　　　　　　　img_text = ("LEAVE %i : ENTER %i" % (self.enter, self.leave))
-　　　　　　　　　　　   cv2.putText(frame, img_text, (45, 25), font, 1.0, (0, 0, 255), 2)
+        img_text = ("LEAVE %i : ENTER %i" % (self.enter, self.leave))
+        cv2.putText(frame, img_text, (45, 25), font, 1.0, (0, 0, 255), 2)
         
         return frame
