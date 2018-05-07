@@ -1,0 +1,13 @@
+{
+  "name": "demo-projects",
+  "version": "",
+  "description": "",
+  "main": "main.py",
+  "author": "",
+  "license": "",
+  "language":"python",
+  "scripts": {
+	"start": "python3 -u camera/main.py"
+  },
+  "dependency": null
+}
