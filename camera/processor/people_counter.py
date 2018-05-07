@@ -79,8 +79,8 @@ class PeopleCounter(object):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         if self.firstFrame is None:
-　　          self.firstFrame = gray
-           return frame
+　　           self.firstFrame = gray
+            return frame
 
         cv2.line( frame,( 0, y_center ),( x_max, y_center ),(255, 0, 0), 2 )
 
