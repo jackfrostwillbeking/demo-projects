@@ -99,9 +99,9 @@ class PeopleCounter(object):
                     motion_found = True
                     biggest_area = found_area
                     (x, y, w, h) = cv2.boundingRect(c)
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    cx = int(x + w/2)
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    cy = int(y + h/2)
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　cw, ch = w, h
+                    cx = int(x + w/2)
+                    cy = int(y + h/2)
+                    cw, ch = w, h
 
 　　　　　　　　　　　　　　　　　    if motion_found:
 　　　　　　　　　　　　　　　　        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
