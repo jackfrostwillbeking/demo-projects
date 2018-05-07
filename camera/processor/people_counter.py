@@ -81,7 +81,7 @@ class PeopleCounter(object):
         if self.firstFrame is None:
 　　           self.firstFrame = gray
             return frame
-
+          
         cv2.line( frame,( 0, y_center ),( x_max, y_center ),(255, 0, 0), 2 )
 
         frameDelta = cv2.absdiff(self.firstFrame, gray)
