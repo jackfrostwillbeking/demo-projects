@@ -103,7 +103,7 @@ class PeopleCounter(object):
                     cy = int(y + h/2)
                     cw, ch = w, h
 
-　　　　　　　　　　　　　　　　　    if motion_found:
+            if motion_found:
 　　　　　　　　　　　　　　　　        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 　　　　　　　　　　           cv2.circle(frame, (cx, cy), 5, (0, 0, 255), 2)
 　　　　　　　　　　　　　　　　　　　　　　　　　　　   move_timer = time.time() - self.move_time
