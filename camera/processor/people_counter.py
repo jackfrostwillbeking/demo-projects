@@ -40,10 +40,10 @@ class PeopleCounter(object):
 
         self.firstFrame = None
 
-	self.move_time = time.time()
-	self.movelist = []
-	self.enter = 0
-	self.leave = 0
+        self.move_time = time.time()
+        self.movelist = []
+        self.enter = 0
+        self.leave = 0
 
     def __del__(self):
         self.vs.stop()
