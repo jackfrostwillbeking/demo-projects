@@ -74,56 +74,56 @@ class PeopleCounter(object):
 
     def process_image(self, frame):
         motion_found = False
-	biggest_area = MIN_AREA
+        biggest_area = MIN_AREA
         frame = imutils.resize(frame, width=min(800, frame.shape[1]))
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-	if self.firstFrame is None:
+        if self.firstFrame is None:
 	    self.firstFrame = gray
-	    return frame
+            return frame
 
-	cv2.line( frame,( 0, y_center ),( x_max, y_center ),(255, 0, 0), 2 )
+        cv2.line( frame,( 0, y_center ),( x_max, y_center ),(255, 0, 0), 2 )
 
-	frameDelta = cv2.absdiff(self.firstFrame, gray)
+        frameDelta = cv2.absdiff(self.firstFrame, gray)
         thresh = cv2.threshold(frameDelta, 70, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=2)
 
-	(cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-	if cnts:
+        if cnts:
             for c in cnts:
                 if cv2.contourArea(c) < 700:
                     continue
-		found_area = cv2.contourArea(c)
-		if found_area > biggest_area:
-		    motion_found = True
-		    biggest_area = found_area
-		    (x, y, w, h) = cv2.boundingRect(c)
-		    cx = int(x + w/2)
-		    cy = int(y + h/2)
-	 	    cw, ch = w, h
+                found_area = cv2.contourArea(c)
+                if found_area > biggest_area:
+                    motion_found = True
+                    biggest_area = found_area
+                    (x, y, w, h) = cv2.boundingRect(c)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    cx = int(x + w/2)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    cy = int(y + h/2)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　cw, ch = w, h
 
-	    if motion_found:
-	        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-		cv2.circle(frame, (cx, cy), 5, (0, 0, 255), 2)
-		move_timer = time.time() - self.move_time
-		if (move_timer >= movelist_timeout):
-		    self.movelist = []
-		self.move_time = time.time()
+　　　　　　　　　　　　　　　　　    if motion_found:
+　　　　　　　　　　　　　　　　        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+　　　　　　　　　　           cv2.circle(frame, (cx, cy), 5, (0, 0, 255), 2)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　   move_timer = time.time() - self.move_time
+　　　　　　　　　　　　　　　　　　　　　　　     if (move_timer >= movelist_timeout):
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　      self.movelist = []
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　self.move_time = time.time()
 
-		old_enter = self.enter
-		old_leave = self.leave
-		self.movelist.append(cy)
-		self.enter, self.leave, self.movelist = self.crossed_y_centerline(self.enter, self.leave, self.movelist)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　   old_enter = self.enter
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　old_leave = self.leave
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　self.movelist.append(cy)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　self.enter, self.leave, self.movelist = self.crossed_y_centerline(self.enter, self.leave, self.movelist)
 
-		if not self.movelist:
-		    if self.enter > old_enter:
-			prefix = 'enter'
-		    elif self.leave > old_leave:
-			prefix = 'leave'
-		    else:
-			prefix = 'error'
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　if not self.movelist:
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    if self.enter > old_enter:
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　        prefix = 'enter'
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　    elif self.leave > old_leave:
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　         prefix = 'leave'
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 else:
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　prefix = 'error'
 
-	img_text = ("LEAVE %i : ENTER %i" % (self.enter, self.leave))
-	cv2.putText(frame, img_text, (45, 25), font, 1.0, (0, 0, 255), 2)
+　　　　　　　　　　　　　　　　img_text = ("LEAVE %i : ENTER %i" % (self.enter, self.leave))
+　　　　　　　　　　　   cv2.putText(frame, img_text, (45, 25), font, 1.0, (0, 0, 255), 2)
         
         return frame
