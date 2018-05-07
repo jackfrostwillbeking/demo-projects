@@ -37,9 +37,7 @@ class PeopleCounter(object):
         self.vs = PiVideoStream(resolution=(800, 608)).start()
         self.flip = flip
         time.sleep(2.0)
-
         self.firstFrame = None
-
         self.move_time = time.time()
         self.movelist = []
         self.enter = 0
