@@ -77,7 +77,6 @@ class PeopleCounter(object):
 	biggest_area = MIN_AREA
         frame = imutils.resize(frame, width=min(800, frame.shape[1]))
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
 	if self.firstFrame is None:
 	    self.firstFrame = gray
 	    return frame
