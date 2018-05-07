@@ -38,7 +38,7 @@ class PeopleCounter(object):
         self.flip = flip
         time.sleep(2.0)
 
-	self.firstFrame = None
+        self.firstFrame = None
 
 	self.move_time = time.time()
 	self.movelist = []
