@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Response
-from processor.simple_streamer import Processor
+#from processor.simple_streamer import Processor
 #from processor.pedestrian_detector import Processor
-# from processor.motion_detector import Processor
+from processor.motion_detector import Processor
 #from processor.people_counter import PeopleCounter as Processor
 #from processor.person_detector import Processor
 import time
